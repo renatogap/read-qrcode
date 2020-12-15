@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Read QR Code with Instascan</title>
+  </head>
+  <body>
+    <video id="preview"></video>
+
+    <script type="text/javascript" src="instascan.min.js" ></script>
+    <script>
+        var scanner = new Instascan.Scanner({
+            video: document.getElementById('preview')
+        });
+
+        scanner.addListener('scan', function(content) {
+            alert('Extracted '+ content +' from QR Code: ');
+            window.open(content, "_blank");
+        });
+
+        Instascan.Camera.getCameras().then(cameras => 
+        {
+            if(cameras.length > 0){
+                scanner.start(cameras[0]);
+            } else {
+                console.error("There is no camera on the device!");
+            }
+        });
+    </script>
+
+ </body>
+</html>
